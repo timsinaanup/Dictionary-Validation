@@ -1,29 +1,30 @@
-def stringDict(input_dict , rules):
+def stringDict(input_dict, rules):
     try:
-        input_dict['age'] = int(input_dict['age'])
-        string_validation = isinstance(input_dict['name'],str) and rules['name']['min_len'] < len(input_dict['name']) < rules['name']['max_len']
-        number_validation = isinstance(input_dict['age'],int) and rules['age']['min'] < int(input_dict['age']) < rules['age']['max']
-        boolean_validation = isinstance(input_dict['gender'],bool) and rules['gender']['value'] == input_dict['gender'] 
+        age = int(input_dict['age'])
+        string_validation = isinstance(input_dict['name'], str) and rules['name']['min_len'] < len(input_dict['name']) < rules['name']['max_len']
+        number_validation = isinstance(age, int) and rules['age']['min'] < age < rules['age']['max']
+        boolean_validation = (input_dict['gender'].lower() == "m") == rules['gender']['value']
 
-        if string_validation and number_validation and boolean_validation :
+
+        if string_validation and number_validation and boolean_validation:
             return True
         else:
             return False
-    except:
+    except ValueError:
+        print("Error: Invalid age value")
         return False
 
-
+min_len = int(input("Min len of string: "))
+max_len = int(input("Max len of string: "))
+min_num = int(input("Smallest integer: "))
+max_num = int(input("Largest integer: "))
+gender = input("Enter gender [M|F]: ").lower()
 rules = {
-    'name': {'min_len': 2, 'max_len': 10},
-    'age': {'min': 18, 'max': 99},
-    'gender': {'value': True }
+    'name': {'min_len': min_len, 'max_len': max_len},
+    'age': {'min': min_num, 'max': max_num},
+    'gender': {'value': gender == "m"}
 }
 
-name = input("Enter name : ")
-age = input('Enter Age : ')
-gender = input("Enter Gender : ")
-gender = True if gender == "M" else False
+input_dict = {'name': 'Anup', 'age': '21', 'gender': 'M'}
 
-input_dict = {'name': name, 'age': age, 'gender' : gender}
-
-print(stringDict(input_dict , rules))
+print(stringDict(input_dict, rules))
