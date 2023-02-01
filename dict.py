@@ -1,30 +1,26 @@
 def stringDict(input_dict, rules):
     try:
-        age = int(input_dict['age'])
-        string_validation = isinstance(input_dict['name'], str) and rules['name']['min_len'] < len(input_dict['name']) < rules['name']['max_len']
-        number_validation = isinstance(age, int) and rules['age']['min'] < age < rules['age']['max']
-        boolean_validation = (input_dict['gender'].lower() == "m") == rules['gender']['value']
+        input_dict_list =[]
+        rules_list = []
 
+        for key,value in input_dict.items():
+            input_dict_list.append(value)
+        
+        for key,value in rules.items():
+            for inner_key,inner_value in value.items():
+                rules_list.append(inner_value)        
+ 
+        string_validation = isinstance(input_dict_list[0], str) and rules_list[0] <= len(input_dict_list[0]) <= rules_list[1]
+        number_validation = isinstance(input_dict_list[1], int) and rules_list[2] <= input_dict_list[1] <= rules_list[3]
 
-        if string_validation and number_validation and boolean_validation:
+        if string_validation and number_validation:
             return True
         else:
             return False
-    except ValueError:
-        print("Error: Invalid age value")
+    except:
         return False
 
-min_len = int(input("Min len of string: "))
-max_len = int(input("Max len of string: "))
-min_num = int(input("Smallest integer: "))
-max_num = int(input("Largest integer: "))
-gender = input("Enter gender [M|F]: ").lower()
-rules = {
-    'name': {'min_len': min_len, 'max_len': max_len},
-    'age': {'min': min_num, 'max': max_num},
-    'gender': {'value': gender == "m"}
-}
+rules = {'name': {'min_len': 1, 'max_len': 10}, 'rooms': {'min': 10, 'max': 100}}
 
-input_dict = {'name': 'Anup', 'age': '21', 'gender': 'M'}
-
+input_dict = {'name': 'A Hospital', 'rooms': 15}
 print(stringDict(input_dict, rules))

@@ -1,1 +1,0 @@
-Rules can be manually by user. If everything validated well, it will return True
